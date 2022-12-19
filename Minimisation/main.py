@@ -22,6 +22,7 @@ def main():
     etatFinal = 2
     minimisateur = Minimisateur(matA,matB,etatFinal)
     afficheTab(minimisateur.identique())
+    print(len(minimisateur.identique()))
     #print(minimisateur.toutCombinaison([2,3]))
 
 def afficheTab(mat):

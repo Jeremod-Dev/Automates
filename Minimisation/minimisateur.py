@@ -11,7 +11,10 @@ class Minimisateur:
     def __initFile(self):
         for i in range(len(self.matA)):
             if (self.etatfinal!=i):
-                self.file.append([self.etatfinal,i])
+                if self.etatfinal < i:
+                    self.file.append([i,self.etatfinal])
+                else:
+                    self.file.append([self.etatfinal,i])
 
     def __transposee(self,mat):
         tmp = [0]*len(mat)
@@ -27,7 +30,7 @@ class Minimisateur:
         while self.posCoupleCourant!=len(self.file):
             coupleDistingueTemp = self.coupleDistingue(self.file[self.posCoupleCourant])
             if len(coupleDistingueTemp) != 0:
-                self.file.extend(self.existeDeja(coupleDistingueTemp))
+                self.suppDoublons(coupleDistingueTemp)
             self.posCoupleCourant += 1
         
         return self.file
@@ -87,13 +90,16 @@ class Minimisateur:
             return None
         return sortie
 
-    def existeDeja(self, liste):
-        for couplePara in liste:
-            for coupleFile in self.file:
-                if(couplePara[0] == coupleFile[0] and couplePara[1] == coupleFile[1])\
-                    or (couplePara[1] == coupleFile[0] and couplePara[0] == coupleFile[1]):
-                    try:
-                        liste.remove(couplePara)
-                    except:
-                        pass
-        return liste
+    def suppDoublons(self, liste):
+        existeDeja = False
+        for eListe in liste:
+            for eFile in self.file:
+                if (((eListe[0]==eFile[0]) and (eListe[1]==eFile[1]))\
+                    or ((eListe[1]==eFile[0]) and (eListe[0]==eFile[1]))):
+                    existeDeja = True
+            if not existeDeja:
+                if eListe[0] < eListe[1]:
+                    self.file.append([eListe[1],eListe[0]])
+                else:
+                    self.file.append([eListe[0],eListe[1]])
+            existeDeja = False
