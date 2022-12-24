@@ -1,0 +1,80 @@
+\documentclass[a4paper]{article}
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\lstset{
+	numbers=left
+}
+
+%%%%%%%%%%%%%%%%  TIPS - LATEX  %%%%%%%%%%%%%%%%%%%%%%%
+% ° Afficher une photo:
+%   - Toutes photos doivent etre dans le dossier src
+%   - Tu peux modifier la taille (scale)
+%
+%\begin{figure}[!h]
+%	\centering
+%	\includegraphics[scale=0.8]{src/NOM_DU_FICHIER.png}
+%	\caption{LEGENDE DE LA PHOTO (OBLIGATOIRE) }
+%\end{figure}
+%
+%======================================================
+%
+% ° Faire un encadré:
+%
+% \fbox{
+%	CONTENU ENCADRE
+% }\\
+%
+%========================================================
+% ° Inclure un code source/programme:
+%	- Les parametres firstline et lastline ne sont pas obligatoire
+%
+% \fbox{
+%	\lstinputlisting[language=Python,firstline=3, lastline=10]{../Bloc.py}
+% }\\
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+	\centering
+    \vspace*{0.5 cm} 
+    \textsc{\LARGE TP4 - Introduction à la sécurité}\\[1.0 cm]
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	\includegraphics[scale=1]{src/logo.png}\\
+	\vspace{0.5cm}
+	\textsc{\Large Faculté des Sciences et Techniques}\\[0.2 cm]
+	\textsc{\large Licence 3 Informatique }\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	\begin{minipage}{0.4\textwidth}
+	\begin{flushright} \large
+		\emph{Encadré par :}\\
+		Pr Philippe GABORIT\\
+		\end{flushright}
+    	\begin{flushright} \large
+		\emph{Réalisé par :}\\
+		Nicolas NAN\\
+		Jérémy DRON \\
+		\end{flushright}
+	\end{minipage}\\[2 cm]
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Algorithme de transformation d'un AFN en AFD}
+\subsection{Principe et structure de données de l'algorithme}
+\subsection{Programme et execution}
+
+
+\section{Algorithme de minimisation d'un automate}
+\subsection{Principe et structure de données de l'algorithme}
+\subsection{Programme et execution}
+
+\end{document}
