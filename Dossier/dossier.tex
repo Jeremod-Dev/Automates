@@ -48,7 +48,7 @@
 	\centering
     \vspace*{0.5 cm} 
     \textsc{\LARGE Projet - Grammaires et langages}\\[1.0 cm]
-    \textsc{\large Transformation et minimisation d'autome}\\[1.0 cm]
+    \textsc{\large Transformation et minimisation d'automate}\\[1.0 cm]
 	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
 	\includegraphics[scale=1]{src/logo.png}\\
 	\vspace{0.5cm}
@@ -70,12 +70,96 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Algorithme de transformation d'un AFN en AFD}
-\subsection{Principe et structure de données de l'algorithme}
+
+En théorie des automates, il existe plusieurs types d'automates ayant des 
+caractèristique bien défini:\\
+
+\begin{itemize}
+	\item \textbf{AFD [Automate Fini Déterministe]:} Une seule transition au plus pour 
+	chaques symboles depuis un état
+	\item \textbf{AFN [Automate Fini Non-déterministe]:} Automate pouvant posséder plusieurs
+ transitions pour chaques symboles depuis un état
+ 	\item \textbf{AFN-$\epsilon$ [Automate Fini Non-Déterministe avec $\epsilon$ transition]:} Automate possédant des transitions
+ 	avec le symbole du vide\\
+\end{itemize}
+
+Il est possible de passer d'un type d'automate à un autre en lui appliquant quelques modifications. Pour
+passer d'un AFN à un AFD, il faut créer des super-états qui seront la combinaisons de plusieurs états.
+Un état sera final si un des états qui le compose l'est.Notre algorithme ne 
+prendra en entrée que les automates suivant: \\
+
+A=\{Q,$\epsilon$,$\delta$,$q_0$,F\}\\
+Q => L'ensembles des états de l'automate avec $|Q|<=10$\\
+$\epsilon$ => L'alphabet de symbole fini avec $\epsilon={a,b}$\\
+$\delta$ => Transitions de l'automate\\
+$q_0$ => L'etat initial de l'automate\\
+F => L'ensemble des états finaux\\
+\subsection{Représentation d'un automate et structure de données}
+
+Dans un premier temps, il nous a fallu pouvoir représenter un automate de manière que notre
+programme puisse le comprendre et l'utiliser. Pour cela, nous avons réaliser pour
+chaques symboles une matrice. Ces matrices continennent uniquement des "0" ou des "1"
+et chaques lignes indiquent l'état de départ d'une transition et chaque colonne l'état 
+d'arrivé.\\
+
+\begin{center}
+   \begin{tabular}{| l ||*{4}{c|} }
+     \hline
+       & 0 & 1 & 2 & 3 \\ \hline\hline
+     0 & 1 & 1 & 0 & 0 \\ \hline
+     1 & 1 & 1 & 1 & 0 \\ \hline
+     2 & 1 & 1 & 1 & 0 \\ \hline
+     3 & 1 & 1 & 0 & 0 \\
+     \hline
+   \end{tabular}
+ \end{center}
+Le tableau ci-dessus représente un matrice concernant un symbole d'un automate.
+
+\subsection{Principe de l'algorithme}
 \subsection{Programme et execution}
 
 
 \section{Algorithme de minimisation d'un automate}
-\subsection{Principe et structure de données de l'algorithme}
+
+A présent, nous cherchons à minimiser un AFD, cest-à-dire que nous
+cherchons à avoir un automate avec le minimum d'état qui a le même
+comportement que celui actuel. En effet, certains automates ont
+des états qui peuvent être combiner entre-eux. Notre algorithme ne 
+prendra en entrée que les automates suivant: \\
+
+A=\{Q,$\epsilon$,$\delta$,$q_0$,F\}\\
+Q => L'ensembles des états de l'automate avec $|Q|<=10$\\
+$\epsilon$ => L'alphabet de symbole fini avec $\epsilon={a,b}$\\
+$\delta$ => Transitions de l'automate\\
+$q_0$ => L'etat initial de l'automate\\
+F => L'ensemble des états finaux\\
+
+
+
+\subsection{Représentation d'un automate et structure de données}
+
+Premièrement, nous avons cherché une représentation, pour notre
+AFD, que notre programme pourrait facilement utiliser. Nous 
+nous sommes alors basés de ce que nous avions trouvé dans la 
+première partie.\\
+Nous avons pour chaque symbole de notre alphabet une matrice lui correspondant. Dans
+le cas précédent notre matrice contenait l'information de quels états
+de départ pointaient sur quels états d'arrivés. Dans ce cas présent,
+c'est l'inverse, nous cherchons à savoir quels états est pointés par
+quels état. Du au fait, que nous travaillons uniquement avec des AFDs
+nous pouvons concidérer que:\\
+
+Soit M = "La matrice des transitions de départ vers arrivé"
+alors $M^t$ = "La matrice des transitions des arrivés vers les départs"\\
+
+Par ailleurs, pour minimiser notre automate nous avons utilisé l'algorithme vu
+en cours. Dans notre programme 
+
+
+\subsection{Principe de l'algorithme}
+
+
+
 \subsection{Programme et execution}
 
 \end{document}

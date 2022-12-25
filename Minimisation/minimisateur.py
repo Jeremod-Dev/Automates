@@ -8,6 +8,13 @@ class Minimisateur:
         self.__initFile()
         self.posCoupleCourant = 0
 
+    #############################
+    # Fonction qui initialise
+    # la file avec des états distinct trivial
+    #
+    # ENTREE: RIEN
+    # SORTIE: RIEN
+    #############################
     def __initFile(self):
         for i in range(len(self.matA)):
             if (self.etatfinal!=i):
@@ -16,6 +23,13 @@ class Minimisateur:
                 else:
                     self.file.append([self.etatfinal,i])
 
+    #############################
+    # Fonction qui realise la 
+    # transposée d'une matrice
+    #
+    # ENTREE: matrice
+    # SORTIE: matrice
+    #############################
     def __transposee(self,mat):
         tmp = [0]*len(mat)
         for i in range(len(mat)):
@@ -26,6 +40,13 @@ class Minimisateur:
                 tmp[j][i]=mat[i][j]
         return tmp
 
+    #############################
+    # Fonction qui recherche les couples
+    # identiques
+    #
+    # ENTREE: RIEN
+    # SORTIE: Liste de couple
+    #############################
     def identique(self):
         while self.posCoupleCourant!=len(self.file):
             coupleDistingueTemp = self.coupleDistingue(self.file[self.posCoupleCourant])
@@ -33,8 +54,16 @@ class Minimisateur:
                 self.suppDoublons(coupleDistingueTemp)
             self.posCoupleCourant += 1
         
-        return self.file
+        return self.coupleManquant(len(self.matA))
 
+    def coupleManquant(self, nbEtat):
+        etats = []
+        etats.append([i for i in range(0,nbEtat)])
+        etats.append([i for i in range(0,nbEtat)])
+        print(etats)
+        toutCouple = self.toutCombinaison(etats)
+        toutCouple = self.suppDoublons(toutCouple)
+        print(toutCouple)
 
     #############################
     # Fonction qui donne les nouveaux 
@@ -90,13 +119,21 @@ class Minimisateur:
             return None
         return sortie
 
-    def suppDoublons(self, liste):
+    #############################
+    # Fonction qui supprime les tuples
+    # qui existe deja dans la file
+    #
+    # ENTREE: Une liste d'entier
+    # SORTIE: RIEN
+    #############################
+    def suppDoublons(self, liste)->None:
         existeDeja = False
         for eListe in liste:
             for eFile in self.file:
                 if (((eListe[0]==eFile[0]) and (eListe[1]==eFile[1]))\
                     or ((eListe[1]==eFile[0]) and (eListe[0]==eFile[1]))):
                     existeDeja = True
+
             if not existeDeja:
                 if eListe[0] < eListe[1]:
                     self.file.append([eListe[1],eListe[0]])
