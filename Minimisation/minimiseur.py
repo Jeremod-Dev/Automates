@@ -38,11 +38,11 @@ class Minimiseur:
     # SORTIE: Entier
     #############################
     def nbEtatMinimise(self)-> int:
-        return self.__automate.getNbEtat()-len(self.__etatsIndistingable)+1
+        return self.__automate.getNbEtat()-len(self.__etatsIndistingable)
 
     #############################
     # Fonction qui donne les nouveaux 
-    # couples distingués depuis celui entree
+    # couples distingues depuis celui entree
     # 
     # ENTREE: Un tuple
     # SORTIE: liste entier de tuple
@@ -54,26 +54,30 @@ class Minimiseur:
             premierEtat :int = l_etats[0]
             secondEtat :int = l_etats[1]
 
-            coupleTmp[0] = self.__indexes(self.__automate.getTransitionsA()[premierEtat])
-            coupleTmp[1] = self.__indexes(self.__automate.getTransitionsA()[secondEtat])
+            coupleTmp[0] = self.__indexes(\
+                self.__automate.getTransitionsA()[premierEtat])
+            coupleTmp[1] = self.__indexes(\
+                self.__automate.getTransitionsA()[secondEtat])
             couplesSortie.extend(self.__toutesCombinaisons(coupleTmp))
         except: 
-            pass  # Déclenché si absence de transition pour ce symbole pour l'etat
+            pass  # Declenche si absence de transition pour ce symbole pour l'etat
         coupleTmp = [None,None]
         try:
-            coupleTmp[0] = self.__indexes(self.__automate.getTransitionsB()[premierEtat])
-            coupleTmp[1] = self.__indexes(self.__automate.getTransitionsB()[secondEtat])
+            coupleTmp[0] = self.__indexes(\
+                self.__automate.getTransitionsB()[premierEtat])
+            coupleTmp[1] = self.__indexes(\
+                self.__automate.getTransitionsB()[secondEtat])
             couplesSortie.extend(self.__toutesCombinaisons(coupleTmp))
         except:
-            pass  # Déclenché si absence de transition pour ce symbole pour l'etat
+            pass  # Declenche si absence de transition pour ce symbole pour l'etat
         return couplesSortie
 
     #############################
     # Fonction qui recupere la position 
     # de tous les "1" d'un liste
     #
-    # ENTREE: liste transition de l'etat de départ
-    # SORTIE: liste entier des états arrivés
+    # ENTREE: liste transition de l'etat de depart
+    # SORTIE: liste entier des etats arrives
     #############################
     def __indexes(self, etatPointe: list[int]) -> list[int]:
         sortie :list[int] = []

@@ -23,6 +23,8 @@ class Automate:
             self.__transitionsA.append([int(j) for j in stdin[i]])
         for i in range(self.__nbEtat+2,self.__nbEtat*2+2):
             self.__transitionsB.append([int(j) for j in stdin[i]])
+        if self.__nbEtat > 10:
+            raise ValueError("L'automate est trop grand")
 
     #############################
     # méthode qui ouvrir le fichier avec l'automate,

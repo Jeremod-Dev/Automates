@@ -132,7 +132,7 @@ Q => L'ensembles des états de l'automate avec $|Q|<=10$\\
 $\epsilon$ => L'alphabet de symbole fini avec $\epsilon={a,b}$\\
 $\delta$ => Transitions de l'automate\\
 $q_0$ => L'etat initial de l'automate\\
-F => L'ensemble des états finaux\\
+F => L'etat final de l'automate\\
 
 
 
@@ -159,7 +159,11 @@ dans le paradygme orienté objet pour une optimisation de la compléxité cognit
 Nous avons réaliser le diagramme de classe de notre programme pour faciliter
 la compréhension de la structure du programme.
 
-% INSERER ICI DIAGRAMME DE CLASSE
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.8]{src/diagramme_minimiseur.png}
+	\caption{Diagramme de classe de notre minimiseur d'automate}
+\end{figure}
 
 
 \subsection{Principe de l'algorithme}
@@ -168,6 +172,10 @@ En premier lieu, l'utilisateur doit créer un objet de type \textit{Automate} et
 un objet de type \textit{Minimiseur} puis il peut utiliser deux méthodes:
 une permettant de récuperer les états non distingables et l'autre le nombre
 d'état de l'automate minimisé.\\
+
+\fbox{
+	\lstinputlisting[]{../Minimisation/main.py}
+}\\
 
 Concretement, l'objet \textit{Automate} prend un fichier en entrée qui contient des informations sur
 l'automate ainsi la représentation de l'automate exprimé plus haut. Le fichier 
@@ -180,8 +188,111 @@ Le fichier peut ressembler à ça:\\
 }\\
 
 C'est grace à ce fichier que l'automate peut être charger dans le programme, donc le respect
-de la forme est essentiel pour le fonctionnement.
+de la forme est essentiel pour le fonctionnement.\\
+
+Pour minimiser l'automate, le \textit{minimiseur} va initialiser la file avec les distingués
+trivialement, i.e. les terminaux et non terminaux. Par la suite, le programme va générer de
+nouveaux couples d'états distingués qu'il va ajouter en file si ces derniers n'existent pas
+déjà. Le programme va parcourir toute la file jusqu'à arriver en tête avant de récuperer les
+états des couples manquants. Pour connaitre le nombre d'état de l'automate final, le \textit{minimiseur}
+soustrait au nombre d'état actuel le nombre d'état non distingué.\\
+
+Pour trouver les états distingués engendré par un couple d'état passé en entrée de la fonction,
+le programme vient recupérer grace
+à la matrice les états pour lesquels il y a une transition avant de d'enregistrer dans la file toutes
+les combinaisons d'états non existant. Si un état d'entrée engendre aucun état de sortie, càd
+si un état ne possede pas de transition pour un symbole de l'alphabet, alors
+le programme ignore les transitions de ce symbole pour cet état.
+
+\fbox{
+	\lstinputlisting[language=Python,firstline=43, lastline=73]{../Minimisation/Minimiseur.py}
+}\\
+
+Pour récuperer les couples manquants, le programme génère tous les couples possibles puis
+il supprime un par un tous ceux qui existe dans notre file. Les couples qui restes sont ceux
+qui n'existent pas en file donc ceux indistingables. Le programme vient effectuer l'opération
+ensembliste suivantes:\\
+
+	soit:\\
+	$A=$\{Ensemble des couples d'états distingués que possède la file\}\\
+	$\bar{A}=$\{Ensemble des couples d'états indistingués\}\\
+	$\Omega=$\{Ensemble des couples d'états possibles\}\\
+
+	Nous cherchons à avoir $\bar{A}$.\\
+
+	$\bar{A}=\Omega-A$
+
+Pour récuperer les états indistingables, il a suffit de prendre les états existant au moins
+une fois dans les couples de $\bar{A}$.
 
 \subsection{Programme et execution}
+
+Dans cette partie, nous allons détailler quelques méthodes du programme permettant le bon
+fonctionnement de l'algorithme décrit ci-avant puis allons mettre en pratique avec un exemple.\\
+
+Notre programme tient essentiellement sur des matrices contenant des transitions d'état. Pour pouvoir
+récuperer depuis un état les états qui pointent vers lui nous avons développé la methode 
+\textit{indexes()}. Cette méthode recupère les numéros des colonnes de la matrice pour une ligne donnée.
+
+\fbox{
+	\lstinputlisting[language=Python,firstline=75, lastline=89]{../Minimisation/Minimiseur.py}
+}\\
+
+Avant de pouvoir ajouter en file tous les états distingués engendré par un couple d'état, il faut
+pouvoir trouver toutes les combinaisons de couples d'états. Pour cela la méthode \textit{toutesCombinaisons()}
+permet d'associer les états entre-eux.\\
+
+\fbox{
+	\lstinputlisting[language=Python,firstline=91, lastline=102]{../Minimisation/Minimiseur.py}
+}\\
+
+Cette méthode se contente uniquement de faire toutes les combinaisons possibles, c'est la méthode appelante
+qui va gérer les doublons par exemple.\\
+
+\textbf{\underline{Exemple:\\}}
+
+Concidérons l'automate suivant:\\
+
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.8]{src/auto1.png}
+	\caption{Automate du premier exemple}
+\end{figure}
+
+La représentation de notre automate pour le programme sera la suivante:\\
+
+\fbox{
+	\lstinputlisting[]{../Minimisation/automate.txt}
+}\\
+
+Grace au fichier l'automate est chargé correctement dans le programme.\\
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.4]{src/autoCharge.png}
+	\caption{Automate chargé en mémoire du programme}
+\end{figure}
+
+Nous pouvons constater que toutes les informations sont chargées en mémoire
+et les transitions sont les transposées des matrices du fichier. Par ailleurs, 
+nous pouvons observer la file durant l'execution et voir qu'elle contient
+les couples de l'initialisation et ceux trouvés lors du déroulement
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{src/fileExecution.png}
+	\caption{Une partie de la file à la fin de l'execution}
+\end{figure}
+
+Après execution de notre programme, nous obtenons la sortie suivante qui correspond à ce
+que nous avions trouvé lors de notre recherche manuel en amont.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{src/resultat_auto1.png}
+	\caption{Affichage du programme pour l'automate de l'exemple}
+\end{figure}
+
 
 \end{document}
