@@ -1,33 +1,13 @@
-from minimisateur import Minimisateur
+from minimiseur import *
+from Automate import *
+
 def main():
-    matA = [
-        [0,1,0,0,0,0,0],
-        [0,0,0,0,0,1,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,1],
-        [0,0,1,0,0,0,0],
-        [0,0,0,0,0,1,0],
-        [0,0,0,0,0,1,0]
-    ]
+    automate : Automate = Automate("Minimisation/automate.txt")
+    minimiseur :Minimiseur = Minimiseur(automate)
 
-    matB = [
-        [0,0,0,0,1,0,0],
-        [0,0,1,0,0,0,0],
-        [0,0,1,0,0,0,0],
-        [0,0,0,0,1,0,0],
-        [0,0,0,0,0,1,0],
-        [0,0,0,1,0,0,0],
-        [0,0,1,0,0,0,0]
-    ]
-    etatFinal = 2
-    minimisateur = Minimisateur(matA,matB,etatFinal)
-    #afficheTab(minimisateur.identique())
-    minimisateur.coupleManquant(6)
+    print(f"Les états identiques de l'automate sont: {minimiseur.etatsIdentique()}")
+    print(f"L'automate minimiser fait {minimiseur.nbEtatMinimise()}")
 
-def afficheTab(mat):
-    for ligne in mat:
-        print(ligne)
-    print("\n")
 
 if __name__ == '__main__':
     main()

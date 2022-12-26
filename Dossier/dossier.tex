@@ -153,12 +153,34 @@ Soit M = "La matrice des transitions de départ vers arrivé"
 alors $M^t$ = "La matrice des transitions des arrivés vers les départs"\\
 
 Par ailleurs, pour minimiser notre automate nous avons utilisé l'algorithme vu
-en cours. Dans notre programme 
+en cours. Dans notre programme nous utiliserons une file qui contiendra les
+couples d'états à vérifier. Nous avons fait le choix de faire notre programme
+dans le paradygme orienté objet pour une optimisation de la compléxité cognitive.
+Nous avons réaliser le diagramme de classe de notre programme pour faciliter
+la compréhension de la structure du programme.
+
+% INSERER ICI DIAGRAMME DE CLASSE
 
 
 \subsection{Principe de l'algorithme}
 
+En premier lieu, l'utilisateur doit créer un objet de type \textit{Automate} et 
+un objet de type \textit{Minimiseur} puis il peut utiliser deux méthodes:
+une permettant de récuperer les états non distingables et l'autre le nombre
+d'état de l'automate minimisé.\\
 
+Concretement, l'objet \textit{Automate} prend un fichier en entrée qui contient des informations sur
+l'automate ainsi la représentation de l'automate exprimé plus haut. Le fichier 
+doit contenir sur la premier ligne le nombre d'état de l'automate, sur la deuxieme
+ligne les états terminaux et finalement les matrices de transitions sur les lignes suivantes.
+Le fichier peut ressembler à ça:\\
+
+\fbox{
+	\lstinputlisting[]{../Minimisation/automate.txt}
+}\\
+
+C'est grace à ce fichier que l'automate peut être charger dans le programme, donc le respect
+de la forme est essentiel pour le fonctionnement.
 
 \subsection{Programme et execution}
 
