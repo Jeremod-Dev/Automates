@@ -1,30 +1,43 @@
 class Automate:
     
-    def __init__(self,path:str)->None:
+    def __init__(self)->None:
         self.__transitionsA : list[list[int]] = []
         self.__transitionsB : list[list[int]] = []
         self.__etatsfinaux: list[int] = []
         self.__nbEtat: int = 0
-        self.__chargerAutomate(path)
-        self.__transitionsA = self.__transposee(self.__transitionsA)
-        self.__transitionsB = self.__transposee(self.__transitionsB)
 
     #############################
     # méthode qui charge les données de l'automate
+    # depuis un fichier texte
     #
     # ENTREE: chaine de caractere
     # SORTIE: RIEN
     #############################
-    def __chargerAutomate(self, path:str)->None:
+    def chargerAutomate(self, path:str)->None:
         stdin = self.__ouvrirFichier(path)
         self.__nbEtat = int(stdin[0][0])
+        if self.__nbEtat > 10:
+            raise ValueError("L'automate est trop grand")
         self.__etatsfinaux = [int(i) for i in stdin[1]]
         for i in range(2,self.__nbEtat+2):
             self.__transitionsA.append([int(j) for j in stdin[i]])
         for i in range(self.__nbEtat+2,self.__nbEtat*2+2):
             self.__transitionsB.append([int(j) for j in stdin[i]])
+
+    #############################
+    # méthode qui charge les données de l'automate
+    # depuis les données en parametre
+    #
+    # ENTREE: entier, liste entier, liste d'entier bidimensionnelle, liste d'entier bidimensionnelle
+    # SORTIE: RIEN
+    #############################
+    def chargerAutomate(self, nbEtat: int, etatFinaux: list[int], transA: list[list[int]],transB: list[list[int]])->None:
         if self.__nbEtat > 10:
             raise ValueError("L'automate est trop grand")
+        self.__nbEtat = nbEtat
+        self.__etatsfinaux = etatFinaux
+        self.__transitionsA = transA
+        self.__transitionsB = transB
 
     #############################
     # méthode qui ouvrir le fichier avec l'automate,
@@ -34,7 +47,6 @@ class Automate:
     # SORTIE: Liste 
     #############################
     def __ouvrirFichier(self,path: str):
-        #TODO methode d'ouverture de fichier qui renvoie les données de l'automate
         sortie :list[str]= []
         with open(path, "r") as fichier:
             for line in fichier.readlines():
@@ -42,23 +54,6 @@ class Automate:
                 ligne = line.split(" ")
                 sortie.append(ligne)
         return sortie
-
-    #############################
-    # Fonction qui realise la 
-    # transposée d'une matrice
-    #
-    # ENTREE: matrice
-    # SORTIE: matrice
-    #############################
-    def __transposee(self,mat):
-        tmp = [0]*len(mat)
-        for i in range(len(mat)):
-            tmp[i] = [0]*len(mat[0])
-
-        for i in range (len(mat)):
-            for j in range (len(mat[0])):
-                tmp[j][i]=mat[i][j]
-        return tmp
 
     def getTransitionsA(self)-> list[list[int]]:
         return self.__transitionsA
@@ -71,3 +66,18 @@ class Automate:
 
     def getNbEtat(self)->int:
         return self.__nbEtat
+
+
+    def setTransitionsA(self, transA: list[list[int]])->None:
+        self.__transitionsA = transA
+
+    def setTransitionsB(self, transB: list[list[int]])->None:
+        self.__transitionsB = transB
+
+    def setEtatsFinaux(self, etatsFinaux: list[int])->None:
+        self.__etatsfinaux = etatsFinaux
+
+    def setNbEtat(self, nbEtat: int)->None:
+        if self.__nbEtat > 10:
+            raise ValueError("L'automate est trop grand")
+        self.__nbEtat = nbEtat
