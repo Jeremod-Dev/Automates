@@ -1,17 +1,20 @@
 from AFNconvertor import *
-from Automate import *
+from AFN import *
+from AFD import *
 
 def main():
-    afn : Automate = Automate("./automate.txt")
+    afn : AFN = AFN()
+    afn.chargerAutomateFichier(".\\AFNtoAFD\\automate.txt")
     convertisseur: AFNconvertor = AFNconvertor(afn)
 
-    afd : Automate = convertisseur.afnToAfd()
+    afd : AFD = convertisseur.afnToAfd()
 
     print(f"L'AFD produit par l'AFN entrée:\
-Nombre etat: {afd.getNbEtat}\
+Nombre etat: {afd.getNbEtat()}\
 Etats finaux: {afd.getEtatsFinaux}\
-Transition A: {afd.getTransitionsA}\
-Transition B: {afd.getTransitionsB}")
+Nom etats ordonnés: {afd.getEtats()}\
+Transition A: {afd.getTransitionsA()}\
+Transition B: {afd.getTransitionsB()}")
 
 if __name__ == '__main__':
     main()
