@@ -42,7 +42,7 @@ class AFNconvertor:
 
     #############################
     # Fonction qui permet de trouver la position d'un
-    # super etat en file grace à son nom
+    # super etat en file grace a son nom
     #
     # ENTREE: nom du super etat recherche
     # SORTIE: entier (position en file)
@@ -52,7 +52,6 @@ class AFNconvertor:
             etatActuel = self.__file.getEtats()[i]
             if etatActuel.getNom()==nomRef:
                 return i
-        return -1
 
     #############################
     # Fonction qui recherche les supers Etats et qui 
@@ -109,7 +108,6 @@ class AFNconvertor:
     # SORTIE: booleen
     #############################
     def __unDesEtatsEstTerminal(self, nomSupEtat : list[int])->bool:
-        #TODO Boucle sur les etats du superEtat et renvoyer vrai si au moins un est terminal
         for etat in self.__afn.getEtats():
             for nomEtat in nomSupEtat:
                 if etat.getNom()==nomEtat and etat.getEstTerminal():
