@@ -1,5 +1,4 @@
-from Etat import *
-class SuperEtat(Etat):
+class SuperEtat:
 
     def __init__(self, nom: list[int], estTerminal : bool) -> None:
         self.__nom : list[int] = nom

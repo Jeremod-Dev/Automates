@@ -21,6 +21,9 @@ class File:
             if itSupEtat.getNom() == nomSupEtat:
                 return True
         return False
+
+    def getEtats(self)->list[SuperEtat]:
+        return self.__supEtats
     
     def estAuBout(self) -> bool:
         return self.__iterateur == len(self.__supEtats)

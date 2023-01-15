@@ -67,26 +67,8 @@ class AFN:
     def getTransitionsB(self)-> list[list[int]]:
         return self.__transitionsB
 
-    def getEtatsFinaux(self)->list[int]:
-        return self.__etatsfinaux
-
     def getNbEtat(self)->int:
         return self.__nbEtat
 
     def getEtats(self)->list[int]:
         return self.__etats
-
-
-    def setTransitionsA(self, transA: list[list[int]])->None:
-        self.__transitionsA = transA
-
-    def setTransitionsB(self, transB: list[list[int]])->None:
-        self.__transitionsB = transB
-
-    def setEtatsFinaux(self, etatsFinaux: list[int])->None:
-        self.__etatsfinaux = etatsFinaux
-
-    def setNbEtat(self, nbEtat: int)->None:
-        if self.__nbEtat > 10:
-            raise ValueError("L'automate est trop grand")
-        self.__nbEtat = nbEtat
